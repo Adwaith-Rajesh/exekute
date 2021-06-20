@@ -2,8 +2,12 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
+from appdirs import user_data_dir
+
 IMAGE_ASSETS = os.path.join(
     Path(os.path.dirname(__file__)).parent.parent, "assets", "images")
+
+DB_PATH = user_data_dir(appauthor="exekute", appname="db")
 
 
 @dataclass
