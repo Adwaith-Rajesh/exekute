@@ -10,7 +10,7 @@ repos:
     rev: 3.9.2
     hooks:
     -   id: flake8
-        args: ["--max-line-length=120"]
+        args: ["--max-line-length=120", "--config=.flake8"]
 -   repo: https://github.com/pre-commit/mirrors-autopep8
     rev: v1.5.7
     hooks:
