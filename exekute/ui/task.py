@@ -6,11 +6,14 @@ from exekute.core.utils import load_image
 
 class Task(Frame):
 
-    def __init__(self, parent: Frame, task_name: str):
+    def __init__(self, parent: Frame, task_name: str, _id: str, edit_cb, exc_cb):
         super(Task, self).__init__(parent, width=185,
                                    height=185, background=Colors.black, borderwidth=0)
 
         self.task_name = task_name
+        self.edit_cb = edit_cb  # edit callback
+        self.exc_cb = exc_cb  # execute callback
+        self._id = _id
 
         self.setup_ui()
         self.bind("<Enter>", self.show_tool_buttons)
@@ -34,12 +37,12 @@ class Task(Frame):
 
         self.task_name.place_forget()
 
-        self.edit_button = Button(self, image=edit_button_bg, borderwidth=0,
-                                  background=Colors.task_grey, activebackground=Colors.task_grey)
+        self.edit_button = Button(self, image=edit_button_bg, borderwidth=0, background=Colors.task_grey,
+                                  activebackground=Colors.task_grey, command=lambda x=self._id: self.edit_cb(x))
         self.edit_button.image = edit_button_bg
 
-        self.exc_button = Button(self, image=exc_button_bg, borderwidth=0,
-                                 background=Colors.task_grey, activebackground=Colors.task_grey)
+        self.exc_button = Button(self, image=exc_button_bg, borderwidth=0, background=Colors.task_grey,
+                                 activebackground=Colors.task_grey, command=lambda x=self._id: self.exc_cb(x))
         self.exc_button.image = exc_button_bg
 
         i = 0
@@ -47,7 +50,6 @@ class Task(Frame):
         def animate_in():
             nonlocal i
             i += 1
-            print(i)
             try:
                 self.exc_button.place(x=10 + i, y=63)
                 self.edit_button.place(x=123 - i, y=63)

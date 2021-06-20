@@ -17,6 +17,8 @@ class DataBase:
         self.db = os.path.join(DB_PATH, "data.json")
 
         if not Path(self.db).is_file():
+            if not Path(DB_PATH).is_dir():
+                os.makedirs(DB_PATH, exist_ok=True)
             self.__create_db()
 
         self.data = self.__load_data()
