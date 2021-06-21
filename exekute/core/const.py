@@ -18,6 +18,10 @@ class Colors:
     task_grey: str = "#DDDDDD"
 
 
+TASK_COLORS = ["#FF63A5", "#E4DF52", "#DC4343",
+               "#556FF6", "#8BA2F0", "#63F99F", "#F86F43", "#57D155"]
+
+
 TASK_ORDER = {
     1: {"x": 70, "y": 146},
     2: {"x": 290, "y": 146},

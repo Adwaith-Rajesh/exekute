@@ -1,7 +1,10 @@
+from random import choice
 from tkinter import *  # noqa: F403
 
 from exekute.core.const import Colors
+from exekute.core.const import TASK_COLORS
 from exekute.core.utils import load_image
+from exekute.core.utils import load_task_image
 
 
 class Task(Frame):
@@ -14,13 +17,14 @@ class Task(Frame):
         self.edit_cb = edit_cb  # edit callback
         self.exc_cb = exc_cb  # execute callback
         self._id = _id
+        self.color = choice(TASK_COLORS)
 
         self.setup_ui()
         self.bind("<Enter>", self.show_tool_buttons)
         self.bind("<Leave>", self.remove_tool_buttons)
 
     def setup_ui(self) -> None:
-        task_bg = load_image("task.png")
+        task_bg = load_task_image(self.color[1:] + ".png")
 
         self.task_bg = Label(self, image=task_bg,
                              background=Colors.black)
@@ -28,7 +32,7 @@ class Task(Frame):
         self.task_bg.place(x=0, y=0)
 
         self.task_name = Label(self, text=self.task_name, font=("arial rounded", 18, "bold"),
-                               wraplength=170, justify=CENTER, background=Colors.task_grey, width=11, height=5)
+                               wraplength=170, justify=CENTER, background=self.color, width=11, height=5)
         self.task_name.place(x=8, y=15)
 
     def show_tool_buttons(self, e) -> None:
@@ -37,11 +41,11 @@ class Task(Frame):
 
         self.task_name.place_forget()
 
-        self.edit_button = Button(self, image=edit_button_bg, borderwidth=0, background=Colors.task_grey,
+        self.edit_button = Button(self, image=edit_button_bg, borderwidth=0, background=self.color,
                                   activebackground=Colors.task_grey, command=lambda x=self._id: self.edit_cb(x))
         self.edit_button.image = edit_button_bg
 
-        self.exc_button = Button(self, image=exc_button_bg, borderwidth=0, background=Colors.task_grey,
+        self.exc_button = Button(self, image=exc_button_bg, borderwidth=0, background=self.color,
                                  activebackground=Colors.task_grey, command=lambda x=self._id: self.exc_cb(x))
         self.exc_button.image = exc_button_bg
 

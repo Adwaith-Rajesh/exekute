@@ -2,6 +2,7 @@ from tkinter import *  # noqa: F403
 
 from .all_tasks import AllTasksWindow
 from .edit_task import EditTask
+from exekute.core.utils import load_image
 
 
 class MainWindow(Tk):
@@ -14,6 +15,8 @@ class MainWindow(Tk):
         self._height = 700
 
         self.resizable(False, False)
+        icon = load_image("execute-button.png")
+        self.iconphoto(False, icon)
         self.center_window()
 
     def center_window(self) -> None:
