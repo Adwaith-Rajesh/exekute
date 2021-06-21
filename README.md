@@ -2,7 +2,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Adwaith-Rajesh/exekute/Testing?label=Testing&style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/Adwaith-Rajesh/exekute?style=for-the-badge)
 
-A Tkinter app to start all you daily routine apps in one click.
+A Tkinter app to start all you daily routine apps with one click.
 
 
 # 🔻Installation
@@ -16,7 +16,7 @@ python exekute.py
 ```
 
 ## 🗜 From executable(Windows)
-Navigate to the release tab and from the latest release download the installer. And click Next until the app gets installed. 😁
+Navigate to the [releases](https://github.com/Adwaith-Rajesh/exekute/releases) tab and from the latest release download the installer. And click Next until the app gets installed. 😁
 
 ---
 ## 📚Usage and Use case
