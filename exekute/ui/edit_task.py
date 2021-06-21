@@ -129,12 +129,14 @@ class EditTask(Frame):
             self.display_error_msg()
 
     def delete(self) -> None:
-        print("delete")
         self.db.del_by_id(self._id)
         self.destroy()
         self.te_cb()
 
     def back(self) -> None:
+        if not self.db.get_by_id(self._id)["name"]:
+
+            self.db.del_by_id(self._id)
         self.destroy()
         self.te_cb()
 

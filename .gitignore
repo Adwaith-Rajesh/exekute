@@ -142,3 +142,4 @@ cython_debug/
 # exekute
 temp
 test.py
+output
