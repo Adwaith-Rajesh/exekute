@@ -52,9 +52,10 @@ class AllTasksWindow(Frame):
             subprocess.call([script])
 
     def add_task(self) -> None:
-        new_id = str(int(uuid.uuid4()))[:8]
-        self.db.add(new_id, data={"name": "", "apps": [], "script": ""})
-        self.task_win_cb(new_id)
+        if len(self.tasks) < 8:
+            new_id = str(int(uuid.uuid4()))[:8]
+            self.db.add(new_id, data={"name": "", "apps": [], "script": ""})
+            self.task_win_cb(new_id)
 
     def display_task(self) -> None:
         if self.order_number <= 8:
