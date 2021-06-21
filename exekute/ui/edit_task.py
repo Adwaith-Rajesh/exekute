@@ -42,7 +42,7 @@ class EditTask(Frame):
 
         if not self.data["name"]:
             self.task_name.delete(0, END)
-            self.task_name.insert(0, "Task name")
+            self.task_name.insert(0, "Group name")
 
         else:
             self.task_name.delete(0, END)

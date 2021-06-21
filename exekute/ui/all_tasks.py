@@ -1,3 +1,5 @@
+import os
+import subprocess
 import uuid
 from tkinter import *  # noqa: F403
 from typing import List
@@ -41,7 +43,13 @@ class AllTasksWindow(Frame):
         self.task_win_cb(_id)
 
     def exc_call_back(self, _id: str):
-        print(_id)
+        apps = self.db.get_by_id(_id)["apps"]
+        for app in apps:
+            os.startfile(app)
+
+        script = self.db.get_by_id(_id)["script"]
+        if script:
+            subprocess.call([script])
 
     def add_task(self) -> None:
         new_id = str(int(uuid.uuid4()))[:8]
