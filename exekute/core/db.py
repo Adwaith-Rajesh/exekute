@@ -34,6 +34,12 @@ class DataBase:
         if _id in self.data:
             return self.data[_id]
 
+    def del_by_id(self, _id: str) -> None:
+        if _id in self.data:
+            del self.data[_id]
+
+        self.__dump_data()
+
     def __create_db(self) -> None:
         with open(self.db, "w") as f:
             f.write("{}")

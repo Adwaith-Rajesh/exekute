@@ -78,3 +78,16 @@ def test_database_json_decode_error(json_file: str, mocker) -> None:
 
     with open(json_file, "r") as f:
         assert f.read() == "{}"
+
+
+def test_database_del_by_id(json_file: str, mocker) -> None:
+    mocker.patch("os.path.join", return_value=json_file)
+    a = DataBase()
+
+    with open(json_file, "r") as f:
+        data = json.load(f)
+    assert len(data) == 2
+    a.del_by_id("123456")
+    with open(json_file, "r") as f:
+        data = json.load(f)
+    assert len(data) == 1
