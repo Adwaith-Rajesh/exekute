@@ -1,1 +1,9 @@
 theme: jekyll-theme-architect
+
+exclude:
+  - exekute/
+  - .gitignore
+  - requirements.txt
+  - requirements-dev.txt
+  - exekute.py
+  - assets/
