@@ -1,6 +1,7 @@
 from tkinter import *  # noqa: F403
 
 from .all_tasks import AllTasksWindow
+from .edit_task import EditTask
 
 
 class MainWindow(Tk):
@@ -11,12 +12,8 @@ class MainWindow(Tk):
         self.title("Exekute")
         self._width = 1000
         self._height = 700
-        # self.geometry("500x500")
-        # self.iconbitmap(ICON_FILE)
-        self.resizable(False, False)
-        # self.icon = PhotoImage(file=ICON_FILE)
-        # self.iconphoto(False, self.icon)
 
+        self.resizable(False, False)
         self.center_window()
 
     def center_window(self) -> None:
@@ -31,5 +28,18 @@ class MainWindow(Tk):
         self.setup_ui()
 
     def setup_ui(self) -> None:
-        task_window = AllTasksWindow(self)
-        task_window.pack(fill=BOTH, expand=True)
+        self.load_main_task_win()
+
+    def load_main_task_win(self) -> None:
+        self.task_window = AllTasksWindow(self, self.task_win_call_back)
+        self.task_window.pack(fill=BOTH, expand=True)
+
+    def task_edit_win_call_back(self) -> None:
+        self.load_main_task_win()
+
+    def task_win_call_back(self, _id: str) -> None:
+        self.task_window.destroy()
+
+        self.edit_window = EditTask(
+            self, task_id=_id, te_cb=self.task_edit_win_call_back)
+        self.edit_window.pack(fill=BOTH, expand=True)
