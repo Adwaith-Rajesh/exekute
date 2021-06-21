@@ -42,11 +42,11 @@ class Task(Frame):
         self.task_name.place_forget()
 
         self.edit_button = Button(self, image=edit_button_bg, borderwidth=0, background=self.color,
-                                  activebackground=Colors.task_grey, command=lambda x=self._id: self.edit_cb(x))
+                                  activebackground=self.color, command=lambda x=self._id: self.edit_cb(x))
         self.edit_button.image = edit_button_bg
 
         self.exc_button = Button(self, image=exc_button_bg, borderwidth=0, background=self.color,
-                                 activebackground=Colors.task_grey, command=lambda x=self._id: self.exc_cb(x))
+                                 activebackground=self.color, command=lambda x=self._id: self.exc_cb(x))
         self.exc_button.image = exc_button_bg
 
         i = 0

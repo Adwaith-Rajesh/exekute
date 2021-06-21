@@ -6,6 +6,8 @@ from exekute.core.const import TASK_EDIT_BTNS
 from exekute.core.const import TASK_EDIT_ENTRY_BOX
 from exekute.core.db import DataBase
 from exekute.core.utils import load_image
+from exekute.core.utils import verify_exe_file
+from exekute.core.utils import verify_script_file
 
 
 class EditTask(Frame):
@@ -94,20 +96,37 @@ class EditTask(Frame):
         self.script_entry.delete(0, END)
 
     def save(self) -> None:
+        add = True
         data = {}
         data["name"] = self.task_name.get()
         apps = []
         for tb in self.entry_boxes:
-            app = tb.get()
+            app = tb.get().rstrip().lstrip()
             if app:
+                if not verify_exe_file(app):
+                    print(app)
+                    add = False
+                    break
                 apps.append(app)
         data["apps"] = apps.copy()
 
-        data["script"] = self.script_entry.get()
+        script = self.script_entry.get().lstrip().rstrip()
+        if script:
+            if verify_script_file(script):
+                data["script"] = script
 
-        self.db.add(self._id, data)
-        self.destroy()
-        self.te_cb()
+            else:
+                print("script")
+                add = False
+        else:
+            data["script"] = ""
+
+        if add:
+            self.db.add(self._id, data)
+            self.destroy()
+            self.te_cb()
+        else:
+            self.display_error_msg()
 
     def delete(self) -> None:
         print("delete")
@@ -118,3 +137,9 @@ class EditTask(Frame):
     def back(self) -> None:
         self.destroy()
         self.te_cb()
+
+    def display_error_msg(self):
+        self.error_label = Label(self, text="Oops!. Some file paths are not valid.", font=(
+            "roboto", 12), background=Colors.black, borderwidth=0, fg="red")
+        self.error_label.place(x=77, y=664)
+        self.after(900, self.error_label.destroy)
