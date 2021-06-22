@@ -72,17 +72,17 @@ class EditTask(Frame):
 
         # add all the buttons
         self.save_btn = Button(self, image=save_btn_bg, background=Colors.black,
-                               activebackground=Colors.black, borderwidth=0, command=self.save)
+                               activebackground=Colors.black, borderwidth=0, command=self.save, cursor="hand2")
         self.save_btn.image = save_btn_bg
         self.clr_btn = Button(self, image=clear_all_btn_bg, background=Colors.black,
-                              activebackground=Colors.black, borderwidth=0, command=self.clear_all)
+                              activebackground=Colors.black, borderwidth=0, command=self.clear_all, cursor="hand2")
         self.clr_btn.image = clear_all_btn_bg
         self.del_btn = Button(self, image=delete_btn_bg, background=Colors.black,
-                              activebackground=Colors.black, borderwidth=0, command=self.delete)
+                              activebackground=Colors.black, borderwidth=0, command=self.delete, cursor="hand2")
         self.del_btn.image = delete_btn_bg
 
         self.back_btn = Button(self, image=back_btn_bg, background=Colors.black,
-                               activebackground=Colors.black, borderwidth=0, command=self.back)
+                               activebackground=Colors.black, borderwidth=0, command=self.back, cursor="hand2")
         self.back_btn.image = back_btn_bg
 
         self.save_btn.place(**TASK_EDIT_BTNS[1])

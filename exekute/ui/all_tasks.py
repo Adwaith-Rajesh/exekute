@@ -35,7 +35,7 @@ class AllTasksWindow(Frame):
 
         self.add_button = Button(
             self, image=add_button_bg, borderwidth=0, bg="#282828", activebackground="#282828",
-            command=self.add_task)
+            command=self.add_task, cursor="hand2")
         self.add_button.image = add_button_bg
         self.add_button.place(x=911, y=40)
 
