@@ -1,4 +1,5 @@
 from tkinter import *  # noqa: F403
+from typing import Dict
 from typing import List
 
 from exekute.core.const import Colors
@@ -20,6 +21,7 @@ class EditTask(Frame):
         self.te_cb = te_cb  # task edit call back
 
         self.data = self.db.get_by_id(task_id)
+        self.exe_name_to_path: Dict[str, str] = {}
 
         self.setup_ui()
 
@@ -59,16 +61,26 @@ class EditTask(Frame):
         self.script_entry = Entry(self, borderwidth=0,
                                   highlightthickness=0, font=("arial", 16), width=53, background=Colors.grey)
         self.script_entry.place(**TASK_EDIT_ENTRY_BOX[6])
+        self.script_entry.bind("<FocusIn>", self.entry_focus_in)
+        self.script_entry.bind("<FocusOut>", self.entry_focus_out)
 
         # fill the all the app names
         count = 0
         for app in self.data["apps"]:
+
+            exe_name = app.split("\\")[-1]
+            self.exe_name_to_path[exe_name] = app
+
             self.entry_boxes[count].delete(0, END)
-            self.entry_boxes[count].insert(0, app)
+            self.entry_boxes[count].insert(0, exe_name)
+            self.entry_boxes[count].bind("<FocusIn>", self.entry_focus_in)
+            self.entry_boxes[count].bind("<FocusOut>", self.entry_focus_out)
             count += 1
 
         self.script_entry.delete(0, END)
-        self.script_entry.insert(0, self.data["script"])
+        script_name = self.data["script"].split("\\")[-1]
+        self.script_entry.insert(0, script_name)
+        self.exe_name_to_path[script_name] = self.data["script"]
 
         # add all the buttons
         self.save_btn = Button(self, image=save_btn_bg, background=Colors.black,
@@ -90,6 +102,24 @@ class EditTask(Frame):
         self.del_btn.place(**TASK_EDIT_BTNS[3])
         self.back_btn.place(**TASK_EDIT_BTNS[4])
 
+    def entry_focus_in(self, e):
+        exe_name = e.widget.get()
+        if exe_name:
+            e.widget.delete(0, END)
+            e.widget.insert(0, self.exe_name_to_path[exe_name])
+
+    def entry_focus_out(self, e):
+        link = e.widget.get()
+
+        if link:
+            for k, v in self.exe_name_to_path.items():
+                if v == link:
+                    e.widget.delete(0, END)
+                    e.widget.insert(0, k)
+
+    def button_click(self, e):
+        print(e)
+
     def clear_all(self) -> None:
         for eb in self.entry_boxes:
             eb.delete(0, END)
@@ -103,6 +133,8 @@ class EditTask(Frame):
         for tb in self.entry_boxes:
             app = tb.get().rstrip().lstrip()
             if app:
+                if app in self.exe_name_to_path:
+                    app = self.exe_name_to_path[app]
                 if not verify_exe_file(app):
                     print(app)
                     add = False
@@ -112,6 +144,8 @@ class EditTask(Frame):
 
         script = self.script_entry.get().lstrip().rstrip()
         if script:
+            if script in self.exe_name_to_path:
+                script = self.exe_name_to_path[script]
             if verify_script_file(script):
                 data["script"] = script
 
